@@ -39,10 +39,71 @@ body {
 }
 
 .container {
-    background-color: black;
     max-width: 1100px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.lista-pokemons {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    list-style: none;
+}
+
+.pokemon-card {
+    width: 23%;
+    height: 200px;
+    margin: 10px;
+    background-color: white;
+    border: 1px solid #363b81;
+    border-radius: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.39);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.pokemon-card > a > h3 {
+    font-size: 22px;
+    color: #ff1f1f;
+}
+
+.form-busca {
+    display: flex;
+    margin: 10px;
+}
+
+.form-busca input {
+    padding: 10px;
+    outline: none;
+    font-size: 20px;
+    border: 1px solid #363b81;
+    border-radius: 5px;
+    color: #ff1f1f;
+}
+
+.form-busca button {
+    outline: none;
+    border: none;
+    background-color: white;
+    margin-left: 10px;
+    padding: 0px 5px;
+    border: 1px solid #363b81;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.form-busca button:hover {
+    transform: scale(1.1);
+    transition: all .6s;
 }
