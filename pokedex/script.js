@@ -9,9 +9,10 @@ const getPokemons = async (name = '') => {
         const data = await response.json(); //{Linhas do código com o THEN 2,3,4}
         console.log(data);
         // Transforma o json em array para possibilitar a iteração com o método MAP()
-        const pokemons = [data]; //{Linhas do código com o THEN 5,6,7,8}
-        console.log(pokemons);
-        render(pokemons); //{Linhas do código com o THEN 9}
+        // const pokemons = [data]; //{Linhas do código com o THEN 5,6,7,8}
+        // console.log(pokemons);
+        
+        renderOne(data); //{Linhas do código com o THEN 9}
 
         // const Api = fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
         // Api.then((response) => {
@@ -28,20 +29,35 @@ const getPokemons = async (name = '') => {
         console.log(response);
         const data = await response.json();
         console.log(data);
-        render(data.results);
+        renderAll(data.results);
     }
 }
 
-const render = (pokemons) => {
+const renderOne = (pokemon) => {
+    listaPokemons.innerHTML = '';
+    listaPokemons.insertAdjacentHTML('beforeend', 
+        `<li class="pokemon-card">
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/${pokemon.id}.gif">
+            <h3>${pokemon.name}</h3>
+            <h4>Peso: ${pokemon.weight}</h4>
+            <p>Tipo:
+            ${pokemon.types.map(el => 
+                el.type.name
+            ).join('/')}</p>
+        </li>`)
+}
+
+const renderAll = (pokemons) => {
     listaPokemons.innerHTML = '';
     pokemons.map((pokemon, index) => {
         listaPokemons.insertAdjacentHTML('beforeend', 
        `<li class="pokemon-card">
-            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/${pokemons.length === 1 ? pokemon.id : index + 1}.gif">
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/${index + 1}.gif">
             <h3>${pokemon.name}</h3>
         </li>`)
     })
 }
+
 
 const searchPokemon = (event) => {
     event.preventDefault();
