@@ -40,6 +40,16 @@ router.delete('/delete/:id', (req, res) => {
     res.send('Produto excluído com sucesso!');
 })
 
+router.put('/update/:id', (req, res) => {
+    const id = req.params.id;
+    const upd = req.body;
+    const index = products.findIndex(product => product.id == id);
+    products[index] = {
+        ...products[index],
+        ...upd
+    }
+    res.status(200).send('Produto atualizado com sucesso!')
+})
 
 
 // Exportamos o router para ser utilizado no index
