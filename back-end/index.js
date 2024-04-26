@@ -4,6 +4,7 @@ console.clear();
 const express = require('express');
 //Inicializa um servidor WEB com express
 const app = express();
+// Importo o módulo de cors
 const cors = require('cors');
 const crypto = require('crypto');
 
@@ -33,10 +34,9 @@ const tarefas = [
         nome: 'Estudar Desenvolvimento de jogos',
         prazo: '20 dias'
     }
-
 ]
+
 app.get('/', (req, res) => {
-    console.log(`${req}`);
     res.send('Olá galera!');
 })
 
@@ -47,7 +47,10 @@ app.get('/tarefas', (req, res) => {
 app.get('/tarefas/:id', (req, res) => {
     // acessando o parâmetro da URL
     const idParam = req.params.id;
-    const tarefa = tarefas.find((tarefa) =>  tarefa.id == idParam)
+    // Procurando a tarefa que tem o id igual ao parâmetro 'ID' da URL
+    const tarefa = tarefas.find(tarefa =>  tarefa.id == idParam)
+    // Respondendo a tarefa
+    res.send(tarefa);
 })
 
 //Defino uma porta de rede para rodar o meu servidor web
