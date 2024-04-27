@@ -10,12 +10,14 @@ const pool = new Pool({
     port: 5432
 });
 
-const test = async () => {
-    const result = await pool.query('SELECT * FROM products');
-    console.log(result);
-}
 
-test();
+// Testando a conexão com o banco de dados
+// const test = async () => {
+//     const result = await pool.query('SELECT * FROM products');
+//     console.log(result.rows);
+// }
+
+// test();
 
 // Exporto a minha constante pool
 module.exports = pool;

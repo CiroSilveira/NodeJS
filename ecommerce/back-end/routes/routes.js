@@ -1,19 +1,24 @@
 const express = require('express');
 const crypto = require('crypto');
 const router = express.Router();
+const pool = require('../dbConfig');
 
-const products = [];
+const products = pool.query('select * from products');
 
-router.get('/', (req, res) => {
-    res.send(products)
+router.get('/', async (req, res) => {
+    const products = await pool.query('select * from products');
+    res.send(products.rows);
 })
 
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
+    // Faço a query no db e retorno o valor dela para a constante products
+    const products = await pool.query('select * from products');
     // Pocuro por um produto no array products cujo id coincide com o id que veio no parâmetro da URL 'req.params.id'
-    const product = products.find(product => product.id == req.params.id);
+    // A constante products é um objeto que tem um array chamado rows. Nesse array vem os itens cadastrados na minha tabela
+    const product = products.rows.find(product => product.id == req.params.id);
     // Se não houver produto cadastrado com o id passado via parâmetro URL eu devolvo um 404 e respondo a mensagem do res.send()
     if(!product) res.status(404).send('Produto não encontrado!');
-    // Se houver produto cadastrada com o id passado via parâmetro URL eu devolvo os dados do produto
+    // Se houver produto cadastrado com o id passado via parâmetro URL eu devolvo os dados do produto
     res.send(product);
 })
 
