@@ -6,22 +6,32 @@ const pool = require('../dbConfig');
 const products = []
 
 router.get('/', async (req, res) => {
-    const {rows} = await pool.query('select * from products order by id');
-    res.send(rows);
+    try {
+        const {rows} = await pool.query('select * from products order by id');
+        res.send(rows);
+    } catch (error) {
+        console.error('O erro foi: ' + error);
+    }
 })
 
 router.get('/:id', async (req, res) => {
-    // Faço a query no DB e retorno o valor dela para a constante rows que é um array de objetos
-    const {rows} = await pool.query('select * from products where id = $1', [req.params.id]);
-    // Pocuro por um produto no array rows cujo id coincide com o id que veio no parâmetro da URL 'req.params.id'
-    // A constante products é um objeto que tem um array chamado rows. Nesse array vem os itens cadastrados na minha tabela
-    // const product = products.rows.find(product => product.id == req.params.id);
-    // Se não houver produto cadastrado com o id passado via parâmetro URL eu devolvo um 404 e respondo a mensagem do res.send()
-    if(rows.length === 0) {
-        res.status(404).send('Produto não encontrado!');
-    } else {// Se houver produto cadastrado com o id passado via parâmetro URL eu devolvo os dados do produto
-        res.send(rows);
+    try {
+        // Faço a query no DB e retorno o valor dela para a constante rows que é um array de objetos
+        const {rows} = await pool.query('select * from products where id = $1', [req.params.id]);
+        // Pocuro por um produto no array rows cujo id coincide com o id que veio no parâmetro da URL 'req.params.id'
+        // A constante products é um objeto que tem um array chamado rows. Nesse array vem os itens cadastrados na minha tabela
+        
+        // Se não houver produto cadastrado com o id passado via parâmetro URL eu devolvo um 404 e respondo a mensagem do res.send()
+        if(rows.length === 0) {
+            res.status(404).send('Produto não encontrado!');
+        } else { // Se houver produto cadastrado com o id passado via parâmetro URL eu devolvo os dados do produto
+            res.send(rows);
+        }
+        
+    } catch (error) {
+        console.error('ERROOO: ' + error);
     }
+    
 })
 
 // CRUD (CREATE - POST) (READ - GET) (UPDATE - PUT) (DELETE - DELETE)
@@ -44,7 +54,7 @@ router.post('/add', async (req, res) => {
 
 router.delete('/delete/:id', async (req, res) => {
     const id = req.params.id;
-    const {rows} = await pool.query('delete from products where id = $1', [id]);
+    const {rows} = await pool.query('delete from products where id = $1 returning *', [id]);
 
     res.status(200).json({
         status: 'Produto excluído com sucesso!',

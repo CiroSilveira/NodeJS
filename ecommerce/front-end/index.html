@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+    <style>
+        input {
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <section>
+        <form id="myForm" method="post" onsubmit="submitForm(event)">
+            <label for="iname">Name: </label>
+            <input type="text" name="name" id="iname"> <br>
+            <label for="icategory">Category: </label>
+            <input type="text" name="category" id="icategory"> <br>
+            <label for="iprice">Price: </label>
+            <input type="text" name="price" id="iprice"> <br>
+            <input type="submit" value="Cadastrar">
+        </form>
+        <ul id="lista"></ul>
+    </section>
+    <script src="script.js"></script>
+</body>
+</html>
