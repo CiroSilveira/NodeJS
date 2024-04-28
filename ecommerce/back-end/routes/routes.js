@@ -40,10 +40,10 @@ router.get('/:id', async (req, res) => {
 router.post('/add', async (req, res) => {
     const product = req.body;
     
-    if(!product.id || !product.name || !product.category || !product.price) {
+    if(!product.name || !product.category || !product.price) {
         res.status(400).send('Está faltando dados do produto.');
     } else {
-        const {rows} = await pool.query('insert into products (id, name, category, price) values ($1, $2, $3, $4) RETURNING *', [product.id, product.name, product.category, product.price]);
+        const {rows} = await pool.query('insert into products (name, category, price) values ($1, $2, $3) RETURNING *', [product.name, product.category, product.price]);
 
         res.status(201).json({
             status: 'Produto cadastrado com sucesso!',
@@ -55,7 +55,6 @@ router.post('/add', async (req, res) => {
 router.delete('/delete/:id', async (req, res) => {
     const id = req.params.id;
     const {rows} = await pool.query('delete from products where id = $1 returning *', [id]);
-
     res.status(200).json({
         status: 'Produto excluído com sucesso!',
         data: rows
